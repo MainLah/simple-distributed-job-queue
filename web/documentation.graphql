@@ -1,12 +1,15 @@
 mutation SimultaneousCreateJob($Job1: String!, $Job2: String!, $Job3: String!) {
-  job1: Enqueue(task:$Job1) {
+  job1: Enqueue(task: $Job1) {
     id
+    status
   }
-  job2: Enqueue(task:$Job2) {
+  job2: Enqueue(task: $Job2) {
     id
+    status
   }
-  job3: Enqueue(task:$Job3) {
+  job3: Enqueue(task: $Job3) {
     id
+    status
   }
 }
 
@@ -15,25 +18,29 @@ mutation SimulateUnstableJob {
     id
     attempts
     status
+    task
   }
 }
 
 query GetAllJobs {
   Jobs {
     id
+    task
+    status
   }
 }
 
-query GetJobById {
-  Job(id: "some-id") {
+query GetJobById($jobId: String!) {
+  Job(id: $jobId) {
     id
     status
     attempts
+    task
   }
 }
 
-query GetAllJobStatus{
-   JobStatus{
+query GetAllJobStatus {
+  JobStatus {
     pending
     running
     failed
